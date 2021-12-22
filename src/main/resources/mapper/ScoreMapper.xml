@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.se.software_engineer.dao.ScoreMapper">
+  <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.Score">
+    <constructor>
+      <idArg column="course_id" javaType="java.lang.String" jdbcType="INTEGER" />
+      <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="attendance_score" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="experiment_score" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="practice_score" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="total_score" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    course_id, id, attendance_score, experiment_score, practice_score, total_score
+  </sql>
+  <select id="selectByExample" parameterType="com.se.software_engineer.entity.ScoreExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.se.software_engineer.entity.ScoreKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where course_id = #{courseId,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.se.software_engineer.entity.ScoreKey">
+    delete from score
+    where course_id = #{courseId,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.se.software_engineer.entity.ScoreExample">
+    delete from score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.se.software_engineer.entity.Score">
+    insert into score (course_id, id, attendance_score, 
+      experiment_score, practice_score, total_score
+      )
+    values (#{courseId,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{attendanceScore,jdbcType=DECIMAL}, 
+      #{experimentScore,jdbcType=DECIMAL}, #{practiceScore,jdbcType=DECIMAL}, #{totalScore,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.se.software_engineer.entity.Score">
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attendanceScore != null">
+        attendance_score,
+      </if>
+      <if test="experimentScore != null">
+        experiment_score,
+      </if>
+      <if test="practiceScore != null">
+        practice_score,
+      </if>
+      <if test="totalScore != null">
+        total_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="attendanceScore != null">
+        #{attendanceScore,jdbcType=DECIMAL},
+      </if>
+      <if test="experimentScore != null">
+        #{experimentScore,jdbcType=DECIMAL},
+      </if>
+      <if test="practiceScore != null">
+        #{practiceScore,jdbcType=DECIMAL},
+      </if>
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.se.software_engineer.entity.ScoreExample" resultType="java.lang.Long">
+    select count(*) from score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update score
+    <set>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attendanceScore != null">
+        attendance_score = #{record.attendanceScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.experimentScore != null">
+        experiment_score = #{record.experimentScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.practiceScore != null">
+        practice_score = #{record.practiceScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalScore != null">
+        total_score = #{record.totalScore,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update score
+    set course_id = #{record.courseId,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=VARCHAR},
+      attendance_score = #{record.attendanceScore,jdbcType=DECIMAL},
+      experiment_score = #{record.experimentScore,jdbcType=DECIMAL},
+      practice_score = #{record.practiceScore,jdbcType=DECIMAL},
+      total_score = #{record.totalScore,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.se.software_engineer.entity.Score">
+    update score
+    <set>
+      <if test="attendanceScore != null">
+        attendance_score = #{attendanceScore,jdbcType=DECIMAL},
+      </if>
+      <if test="experimentScore != null">
+        experiment_score = #{experimentScore,jdbcType=DECIMAL},
+      </if>
+      <if test="practiceScore != null">
+        practice_score = #{practiceScore,jdbcType=DECIMAL},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where course_id = #{courseId,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.se.software_engineer.entity.Score">
+    update score
+    set attendance_score = #{attendanceScore,jdbcType=DECIMAL},
+      experiment_score = #{experimentScore,jdbcType=DECIMAL},
+      practice_score = #{practiceScore,jdbcType=DECIMAL},
+      total_score = #{totalScore,jdbcType=DECIMAL}
+    where course_id = #{courseId,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
