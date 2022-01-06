@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.Notice">
     <constructor>
       <idArg column="notice_id" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="course_id" javaType="java.lang.String" jdbcType="INTEGER" />
+      <arg column="course_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="course_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="notice_tittle" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="notice_content" javaType="java.lang.String" jdbcType="VARCHAR" />

@@ -10,7 +10,7 @@ public class Notice {
     @TableId
     private String noticeId;
 
-    private Integer courseId;
+    private String courseId;
 
     private String courseName;
 

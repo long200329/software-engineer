@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface CourseMapper extends BaseMapper<Course>{
     Integer maxId();
-
+    List getCourseById(String id);
 }

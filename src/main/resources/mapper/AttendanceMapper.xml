@@ -5,7 +5,7 @@
 <mapper namespace="com.se.software_engineer.mapper.AttendanceMapper">
 
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.Attendance">
-    <id property="courseId" column="id" jdbcType="INTEGER"/>
+    <id property="courseId" column="id" jdbcType="VARCHAR"/>
     <id property="id" column="id" jdbcType="VARCHAR"/>
     <id property="loginTime" column="login_time" jdbcType="DATE"/>
 

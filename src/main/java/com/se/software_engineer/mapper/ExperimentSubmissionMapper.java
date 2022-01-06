@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface ExperimentSubmissionMapper extends BaseMapper<ExperimentSubmission>{
-
+    Integer maxId(String id,String courseId);
 }

@@ -6,7 +6,7 @@
 
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.Permission">
     <id property="id" column="id" jdbcType="VARCHAR"/>
-    <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+    <id property="courseId" column="course_id" jdbcType="VARCHAR"/>
     <result property="userPermission" column="user_permission" jdbcType="VARCHAR"/>
 
 

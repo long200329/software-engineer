@@ -4,14 +4,15 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.se.software_engineer.entity.Course;
-import com.se.software_engineer.entity.Permission;
-import com.se.software_engineer.mapper.CourseMapper;
-import com.se.software_engineer.mapper.PermissionMapper;
+import com.se.software_engineer.entity.*;
+import com.se.software_engineer.mapper.*;
 import com.se.software_engineer.service.CourseService;
+import com.se.software_engineer.service.ScoreService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +21,14 @@ public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper;
     @Resource
     private PermissionMapper permissionMapper;
+    @Resource
+    private CourseScoreMapper courseScoreMapper;
+    @Resource
+    private ScoreMapper scoreMapper;
+    @Resource
+    private ScoreService scoreService;
+    @Resource
+    private AttendanceMapper attendanceMapper;
 
     public int createCourse(JSONObject object){
         Course course = new Course();
@@ -28,17 +37,26 @@ public class CourseServiceImpl implements CourseService {
         course.setSchedule(object.getStr("schedule"));
         course.setState("Inactive");
         course.setTeacherId("teacherId");
-        course.setCourseId(object.getInt("courseId"));
+        course.setCourseId(object.getStr("courseId"));
 
         courseMapper.insert(course);
 
+        CourseScore courseScore = new CourseScore();
+        courseScore.setCourseId(object.getStr("courseId"));
+        courseScore.setAttendanceWeight(BigDecimal.ZERO);
+        courseScore.setExperimentWeight(BigDecimal.ZERO);
+        courseScore.setPracticeWeight(BigDecimal.ZERO);
+        courseScore.setExperimentTotalScore(BigDecimal.ZERO);
+        courseScore.setPracticeTotalScore(BigDecimal.ZERO);
+        courseScoreMapper.insert(courseScore);
+
         JSONArray list = object.getJSONArray("studentList");
 
-        createPermission(list,object.getInt("courseId"));
+        createPermission(list,object.getStr("courseId"));
         return 1;
     }
 
-    public int createPermission(JSONArray array,Integer courseId){
+    public int createPermission(JSONArray array,String courseId){
         for(int i=0;i<array.size();i++){
             JSONObject object = array.getJSONObject(i);
             Permission permission = new Permission();
@@ -46,6 +64,17 @@ public class CourseServiceImpl implements CourseService {
             permission.setId(object.getStr("id"));
             permission.setUserPermission(object.getStr("userPermission"));
             permissionMapper.insert(permission);
+
+
+                Score score = new Score();
+                score.setCourseId(courseId);
+                score.setId(permission.getId());
+                score.setAttendanceScore(new BigDecimal(0.00));
+                score.setExperimentScore(new BigDecimal(0.00));
+                score.setPracticeScore(new BigDecimal(0.00));
+                score.setTotalScore(new BigDecimal(0.00));
+                scoreMapper.insert(score);
+
         }
         return 1;
     }
@@ -59,7 +88,41 @@ public class CourseServiceImpl implements CourseService {
             Permission permission = (Permission) permissionList.get(i);
             array.add(JSONUtil.parse(courseMapper.selectById(permission.getCourseId())));
         }
-        return array;
+        JSONArray arr = new JSONArray();
+
+        for(int i=0;i<array.size();i++){
+            JSONObject object = array.getJSONObject(i);
+            JSONObject object1 = new JSONObject();
+            object1.put("courseId",object.getStr("CourseId"));
+            object1.put("courseName",object.getStr("courseName"));
+            arr.add(object1);
+        }
+
+        return arr;
+    }
+
+    public int attend(String courseId,String id){
+        Attendance attendance = new Attendance();
+        attendance.setId(id);
+        attendance.setCourseId(courseId);
+
+        Date recordTime = new Date();
+        recordTime.setHours(recordTime.getHours()+8);
+
+        attendance.setLoginTime(recordTime);
+
+        QueryWrapper<Score>scoreQueryWrapper = new QueryWrapper<>();
+        scoreQueryWrapper.eq("course_id",courseId).eq("id",id);
+        Score score = scoreMapper.selectOne(scoreQueryWrapper);
+
+        if(score.getAttendanceScore().compareTo(new BigDecimal(100))==-1){
+            score.setAttendanceScore(score.getAttendanceScore().add(new BigDecimal(10.00)));
+            scoreMapper.update(score,scoreQueryWrapper);
+            scoreService.calculateScore(id,courseId);
+        }
+
+        return attendanceMapper.insert(attendance);
+
     }
 
 }

@@ -6,7 +6,7 @@
 
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.ExperimentInfo">
     <id property="experimentId" column="experiment_id" jdbcType="VARCHAR"/>
-    <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+    <result property="courseId" column="course_id" jdbcType="VARCHAR"/>
     <result property="teacher" column="teacher" jdbcType="VARCHAR"/>
     <result property="description" column="description" jdbcType="VARCHAR"/>
     <result property="template" column="template" jdbcType="VARCHAR"/>

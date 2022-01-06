@@ -10,7 +10,7 @@ public class PracticeProblem  {
     @TableId
     private Integer number;
 
-    private Integer courseId;
+    private String courseId;
 
     private String description;
 

@@ -10,7 +10,7 @@ public class Feedback {
     @TableId
     private String feedbackId;
 
-    private Integer courseId;
+    private String courseId;
 
     private String id;
 

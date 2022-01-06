@@ -11,7 +11,7 @@ public class ExperimentInfo {
     @TableId
     private Integer experimentId;
 
-    private Integer courseId;
+    private String courseId;
 
     private String teacher;
 

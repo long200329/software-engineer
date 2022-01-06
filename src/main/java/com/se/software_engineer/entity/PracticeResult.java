@@ -12,7 +12,7 @@ public class PracticeResult  {
     @TableId
     private String id;
 
-    private Integer courseId;
+    private String courseId;
 
     private BigDecimal score;
 

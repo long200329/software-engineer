@@ -7,7 +7,7 @@
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.ExperimentSubmission">
     <id property="experimentId" column="experiment_id" jdbcType="VARCHAR"/>
     <id property="id" column="id" jdbcType="VARCHAR"/>
-    <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+    <id property="courseId" column="course_id" jdbcType="VARCHAR"/>
     <result property="submissionTime" column="submission_time" jdbcType="DATE"/>
     <result property="type" column="type" jdbcType="VARCHAR"/>
     <result property="content" column="content" jdbcType="VARCHAR"/>
@@ -20,4 +20,11 @@
   <sql id="Base_Column_List">
     experiment_id,id,course_id,submission_time,type,content,score,corrector_id,corrector_name
   </sql>
+
+  <select id="maxId" resultType="Integer">
+    SELECT MAX(experiment_id)
+    FROM experiment_submission
+    where id=#{id} and course_id =#{courseId}
+  </select>
+
 </mapper>

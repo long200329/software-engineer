@@ -10,7 +10,7 @@ public class PracticeInfo {
     @TableId
     private String practiceId;
 
-    private Integer courseId;
+    private String courseId;
 
     private Date deadline;
 

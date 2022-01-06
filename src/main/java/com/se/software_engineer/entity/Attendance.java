@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class Attendance {
     @TableId
-    private Integer courseId;
+    private String courseId;
     @TableId
     private String id;
     @TableId

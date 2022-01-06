@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CourseService {
     int createCourse(JSONObject object);
-    int createPermission(JSONArray array,Integer courseId);
+    int createPermission(JSONArray array,String courseId);
     JSONArray getCourses(String id);
+    int attend(String courseId,String id);
+
 }

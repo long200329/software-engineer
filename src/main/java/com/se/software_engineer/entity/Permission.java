@@ -8,7 +8,7 @@ public class Permission  {
     @TableId
     private String id;
     @TableId
-    private Integer courseId;
+    private String courseId;
 
     private String userPermission;
 

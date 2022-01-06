@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class CourseScore {
     @TableId
-    private Integer courseId;
+    private String courseId;
 
     private BigDecimal attendanceWeight;
 

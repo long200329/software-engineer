@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class Course {
     @TableId
-    private Integer courseId;
+    private String courseId;
 
     private String chargingTeacherId;
 
@@ -18,7 +18,6 @@ public class Course {
     private String state;
 
     private String schedule;
-
 
     private String courseName;
 

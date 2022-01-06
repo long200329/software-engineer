@@ -5,7 +5,7 @@
 <mapper namespace="com.se.software_engineer.mapper.CourseScoreMapper">
 
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.CourseScore">
-    <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+    <id property="courseId" column="course_id" jdbcType="VARCHAR"/>
     <result property="attendanceWeight" column="attendance_weight" jdbcType="DECIMAL"/>
     <result property="experimentWeight" column="experiment_weight" jdbcType="DECIMAL"/>
     <result property="practiceWeight" column="practice_weight" jdbcType="DECIMAL"/>

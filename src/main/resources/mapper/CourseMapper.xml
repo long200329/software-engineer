@@ -5,7 +5,7 @@
 <mapper namespace="com.se.software_engineer.mapper.CourseMapper">
 
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.Course">
-    <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+    <id property="courseId" column="course_id" jdbcType="VARCHAR"/>
     <result property="chargingTeacherId" column="charging_teacher_id" jdbcType="VARCHAR"/>
     <result property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
     <result property="state" column="state" jdbcType="VARCHAR"/>
@@ -23,4 +23,7 @@
     FROM course
 
   </select>
+
+
+
 </mapper>

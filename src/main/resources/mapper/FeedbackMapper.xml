@@ -7,7 +7,7 @@
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.Feedback">
     <id property="feedbackId" column="feedback_id" jdbcType="VARCHAR"/>
     <result property="id" column="id" jdbcType="VARCHAR"/>
-    <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+    <result property="courseId" column="course_id" jdbcType="VARCHAR"/>
     <result property="feedbackContent" column="feedback_content" jdbcType="VARCHAR"/>
     <result property="date" column="date" jdbcType="DATE"/>
 

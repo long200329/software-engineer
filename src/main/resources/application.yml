@@ -29,4 +29,6 @@ devtools:
   restart:
     enabled: true #是否支持热部署
 
-
+file:
+  localPath: "C:\\upload"
+  webPath: "http://175.24.202.178:777"
