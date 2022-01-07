@@ -4,10 +4,7 @@ package com.se.software_engineer.Controller;
 import com.se.software_engineer.entity.CommonResult;
 import com.se.software_engineer.service.CourseScoreService;
 import com.se.software_engineer.service.ScoreService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -34,5 +31,15 @@ public class ScoreController {
         }
         return CommonResult.failure("修改失败");
 
+    }
+
+    @GetMapping("/score")
+    public CommonResult getScore(@RequestParam String courseId,@RequestParam String id){
+        if(courseId == null)
+            return CommonResult.failure("请求失败，缺少课程号");
+        if(id == null)
+            return CommonResult.failure("请求失败，缺少学号");
+
+        return CommonResult.success("查询成功",scoreService.getScore(id,courseId));
     }
 }

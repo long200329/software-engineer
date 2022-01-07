@@ -10,10 +10,11 @@ import java.util.List;
 
 public interface ExperimentService {
     int createExperiment(ExperimentInfo experimentInfo);
-    List getExperiments(Integer courseId);
-    ExperimentInfo getExperiment(Integer courseId,Integer experimentId);
+    List getExperiments(String courseId);
+    ExperimentInfo getExperiment(String courseId,Integer experimentId);
     int createReport(ExperimentSubmission experimentSubmission, MultipartFile file)throws IOException;
     String uploadReport(String courseId,Integer ExperimentId,MultipartFile file)throws IOException;
     ExperimentSubmission getReport(String id,String courseId,int experimentId);
     int putReport(String id,String courseId,int experimentId,String correctorId,String correctorName,Double score);
+    int getReportScore(String id,String courseId,Integer experimentId);
 }

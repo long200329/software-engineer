@@ -5,7 +5,7 @@
 <mapper namespace="com.se.software_engineer.mapper.FeedbackMapper">
 
   <resultMap id="BaseResultMap" type="com.se.software_engineer.entity.Feedback">
-    <id property="feedbackId" column="feedback_id" jdbcType="VARCHAR"/>
+    <id property="feedbackId" column="feedback_id" jdbcType="INTEGER"/>
     <result property="id" column="id" jdbcType="VARCHAR"/>
     <result property="courseId" column="course_id" jdbcType="VARCHAR"/>
     <result property="feedbackContent" column="feedback_content" jdbcType="VARCHAR"/>
@@ -17,4 +17,10 @@
   <sql id="Base_Column_List">
     feedback_id,id,course_id,feedback_content,date
   </sql>
+
+  <select id="maxId" resultType="Integer">
+    SELECT MAX(feedback_id)
+    FROM feedback
+
+  </select>
 </mapper>

@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Feedback {
     @TableId
-    private String feedbackId;
+    private Integer feedbackId;
 
     private String courseId;
 

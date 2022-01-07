@@ -22,7 +22,7 @@ public class ExperimentController {
 
 
     @GetMapping("/experiment")
-    public CommonResult getExperiment(@RequestParam  Integer courseId){
+    public CommonResult getExperiment(@RequestParam  String courseId){
         if(courseId == null)
             return CommonResult.failure("错误，缺少courseId");
 
@@ -39,7 +39,7 @@ public class ExperimentController {
     }
 
     @GetMapping("/experimentInfo")
-    public CommonResult getExperimentInfo(@RequestParam Integer courseId,@RequestParam Integer experimentId){
+    public CommonResult getExperimentInfo(@RequestParam String courseId,@RequestParam Integer experimentId){
         if(courseId == null)
             return CommonResult.failure("错误，缺少courseId");
         if(experimentId == null)
@@ -95,5 +95,16 @@ public class ExperimentController {
             return CommonResult.success("修改成功",null);
         else
             return CommonResult.failure("修改失败");
+    }
+
+    @GetMapping("/reportScore")
+    public CommonResult getReportScore(@RequestParam String courseId,@RequestParam Integer experimentId,@RequestParam String id){
+        if(courseId == null)
+            return CommonResult.failure("错误，缺少courseId");
+        if(experimentId == null)
+            return CommonResult.failure("错误，缺少experimentId");
+        if(id == null)
+            return CommonResult.failure("错误，缺少id");
+        return CommonResult.success("查询成功",experimentService.getReportScore(id,courseId,experimentId));
     }
 }

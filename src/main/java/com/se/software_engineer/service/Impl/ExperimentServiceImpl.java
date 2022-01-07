@@ -1,17 +1,9 @@
 package com.se.software_engineer.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.se.software_engineer.entity.CourseScore;
-import com.se.software_engineer.entity.ExperimentInfo;
-import com.se.software_engineer.entity.ExperimentSubmission;
-import com.se.software_engineer.entity.Score;
-import com.se.software_engineer.mapper.CourseScoreMapper;
-import com.se.software_engineer.mapper.ExperimentInfoMapper;
-import com.se.software_engineer.mapper.ExperimentSubmissionMapper;
-import com.se.software_engineer.mapper.ScoreMapper;
-import com.se.software_engineer.service.CourseScoreService;
-import com.se.software_engineer.service.ExperimentService;
-import com.se.software_engineer.service.ScoreService;
+import com.se.software_engineer.entity.*;
+import com.se.software_engineer.mapper.*;
+import com.se.software_engineer.service.*;
 import com.se.software_engineer.service.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,6 +29,10 @@ public class ExperimentServiceImpl implements ExperimentService {
     private ScoreMapper scoreMapper;
     @Resource
     private ScoreService scoreService;
+    @Resource
+    private NoticeService noticeService;
+    @Resource
+    private CourseService courseService;
 
     public int createExperiment(ExperimentInfo experimentInfo){
         Integer num = experimentInfoMapper.maxId();
@@ -47,20 +43,27 @@ public class ExperimentServiceImpl implements ExperimentService {
 
         experimentInfo.setExperimentId(num);
         if(experimentInfoMapper.insert(experimentInfo)>0){
+
             courseScoreService.addExperimentScore(experimentInfo.getCourseId());
+
+            noticeService.createNotice("教师发布实验项目:"+experimentInfo.getExperimentName(),
+                    experimentInfo.getDescription(),experimentInfo.getCourseId());
+
+
+
             return num;
         }
         return 0;
     }
 
-    public List getExperiments(Integer courseId){
+    public List getExperiments(String courseId){
         QueryWrapper<ExperimentInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("course_id",courseId);
 
         return experimentInfoMapper.selectList(queryWrapper);
     }
 
-    public ExperimentInfo getExperiment(Integer courseId,Integer experimentId){
+    public ExperimentInfo getExperiment(String courseId,Integer experimentId){
         QueryWrapper<ExperimentInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("course_id",courseId).eq("experiment_id",experimentId);
         return experimentInfoMapper.selectOne(queryWrapper);
@@ -127,4 +130,9 @@ public class ExperimentServiceImpl implements ExperimentService {
 
         return experimentSubmissionMapper.update(report,queryWrapper);
     }
+
+    public int getReportScore(String id,String courseId,Integer experimentId){
+        return experimentSubmissionMapper.getReportScore(id,courseId,experimentId);
+    }
+
 }

@@ -10,5 +10,5 @@ public interface CourseService {
     int createPermission(JSONArray array,String courseId);
     JSONArray getCourses(String id);
     int attend(String courseId,String id);
-
+    String getCourseName(String courseId);
 }

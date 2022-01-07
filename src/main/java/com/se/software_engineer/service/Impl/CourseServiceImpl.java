@@ -125,4 +125,11 @@ public class CourseServiceImpl implements CourseService {
 
     }
 
+    public String getCourseName(String courseId){
+        QueryWrapper<Course>queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("course_id",courseId);
+        Course course = courseMapper.selectOne(queryWrapper);
+        return course.getCourseName();
+    }
+
 }

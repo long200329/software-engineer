@@ -14,5 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface NoticeMapper extends BaseMapper<Notice> {
+    Integer maxId();
 
 }

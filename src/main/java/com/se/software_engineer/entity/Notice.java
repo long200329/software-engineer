@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Notice {
     @TableId
-    private String noticeId;
+    private Integer noticeId;
 
     private String courseId;
 

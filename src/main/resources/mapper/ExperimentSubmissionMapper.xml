@@ -21,10 +21,10 @@
     experiment_id,id,course_id,submission_time,type,content,score,corrector_id,corrector_name
   </sql>
 
-  <select id="maxId" resultType="Integer">
-    SELECT MAX(experiment_id)
+  <select id="getReportScore" resultType="Integer">
+    SELECT score
     FROM experiment_submission
-    where id=#{id} and course_id =#{courseId}
+    where id=#{id} and course_id =#{courseId} and experiment_id =#{experimentId}
   </select>
 
 </mapper>

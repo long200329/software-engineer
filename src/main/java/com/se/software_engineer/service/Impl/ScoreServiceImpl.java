@@ -59,5 +59,12 @@ public class ScoreServiceImpl implements ScoreService {
         }
         return;
     }
+    public Score getScore(String id, String courseId){
+        QueryWrapper<Score>queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id).eq("course_id",courseId);
+        Score score = scoreMapper.selectOne(queryWrapper);
+        return score;
+    }
+
 
 }
