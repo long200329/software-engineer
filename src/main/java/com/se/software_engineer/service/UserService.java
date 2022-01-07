@@ -11,4 +11,5 @@ public interface UserService {
     User checkUser(String id);
     int deleteUser(String id);
     String sendMail(String id,String email);
+    String getUserName(String id);
 }

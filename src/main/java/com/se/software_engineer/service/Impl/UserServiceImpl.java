@@ -79,4 +79,14 @@ public class UserServiceImpl implements UserService {
         return captcha;
     }
 
+    @Override
+    public String getUserName(String id){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id);
+        User user = userMapper.selectOne(queryWrapper);
+        return user.getName();
+    }
+
+
+
 }

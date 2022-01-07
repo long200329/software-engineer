@@ -8,6 +8,7 @@ import com.se.software_engineer.entity.*;
 import com.se.software_engineer.mapper.*;
 import com.se.software_engineer.service.CourseService;
 import com.se.software_engineer.service.ScoreService;
+import com.se.software_engineer.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +30,8 @@ public class CourseServiceImpl implements CourseService {
     private ScoreService scoreService;
     @Resource
     private AttendanceMapper attendanceMapper;
+    @Resource
+    private UserService userService;
 
     public int createCourse(JSONObject object){
         Course course = new Course();
@@ -130,6 +133,23 @@ public class CourseServiceImpl implements CourseService {
         queryWrapper.eq("course_id",courseId);
         Course course = courseMapper.selectOne(queryWrapper);
         return course.getCourseName();
+    }
+
+    public List getPermissions(String courseId){
+        QueryWrapper<Permission>queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("course_id",courseId);
+        List list = permissionMapper.selectList(queryWrapper);
+
+        List perimissionList = new JSONArray();
+        for(int i=0;i<list.size();i++){
+            JSONObject object = new JSONObject();
+            Permission permission = (Permission) list.get(i);
+            object.put("permission",permission.getUserPermission());
+            object.put("id",permission.getId());
+            object.put("name",userService.getUserName(permission.getId()));
+            perimissionList.add(object);
+        }
+        return perimissionList;
     }
 
 }
