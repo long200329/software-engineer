@@ -48,11 +48,15 @@ public class ExperimentController {
     }
 
     @PostMapping("/report")
-    public CommonResult postReport(@RequestParam String courseId, @RequestParam String id, @RequestParam Integer experimentId, @RequestPart MultipartFile file)throws IOException {
+    public CommonResult postReport(@RequestParam String courseId, @RequestParam String id, @RequestParam Integer experimentId,
+                                   @RequestPart (required = false) MultipartFile file,@RequestParam String type,@RequestParam (required = false) String content )throws IOException {
         ExperimentSubmission experimentSubmission = new ExperimentSubmission();
         experimentSubmission.setCourseId(courseId);
         experimentSubmission.setId(id);
         experimentSubmission.setExperimentId(experimentId);
+        if(content!=null)
+            experimentSubmission.setContent(content);
+        experimentSubmission.setType(type);
         Date recordTime = new Date();
         recordTime.setHours(recordTime.getHours()+8);
         experimentSubmission.setSubmissionTime(recordTime);

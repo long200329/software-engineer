@@ -75,9 +75,13 @@ public class ExperimentServiceImpl implements ExperimentService {
             experimentSubmission.setContent(uploadReport(experimentSubmission.getCourseId(),experimentSubmission.getExperimentId(),file));
         }
 
+        QueryWrapper<ExperimentSubmission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("experiment_id",experimentSubmission.getExperimentId()).eq("course_id",experimentSubmission.getCourseId()).eq("id",experimentSubmission.getId());
 
-
-        return experimentSubmissionMapper.insert(experimentSubmission);
+        if(experimentSubmissionMapper.selectOne(queryWrapper)==null)
+            return experimentSubmissionMapper.insert(experimentSubmission);
+        else
+            return experimentSubmissionMapper.update(experimentSubmission,queryWrapper);
     }
 
     public String uploadReport(String courseId,Integer ExperimentId,MultipartFile file)throws IOException {
