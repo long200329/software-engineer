@@ -11,11 +11,12 @@
     <result property="state" column="state" jdbcType="VARCHAR"/>
     <result property="schedule" column="schedule" jdbcType="VARCHAR"/>
     <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+    <result property="description" column="description" jdbcType="VARCHAR"/>
 
   </resultMap>
 
   <sql id="Base_Column_List">
-    course_id,charging_teacher_id,teacher_id,state,schedule,course_name
+    course_id,charging_teacher_id,teacher_id,state,schedule,course_name,description
   </sql>
 
   <select id="maxId" resultType="Integer">

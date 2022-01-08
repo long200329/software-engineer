@@ -96,7 +96,7 @@ public class CourseServiceImpl implements CourseService {
         for(int i=0;i<array.size();i++){
             JSONObject object = array.getJSONObject(i);
             JSONObject object1 = new JSONObject();
-            object1.put("courseId",object.getStr("CourseId"));
+            object1.put("courseId",object.getStr("courseId"));
             object1.put("courseName",object.getStr("courseName"));
             arr.add(object1);
         }
@@ -150,6 +150,12 @@ public class CourseServiceImpl implements CourseService {
             perimissionList.add(object);
         }
         return perimissionList;
+    }
+
+    public Course getCourse(String courseId){
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("course_id",courseId);
+        return courseMapper.selectOne(queryWrapper);
     }
 
 }
