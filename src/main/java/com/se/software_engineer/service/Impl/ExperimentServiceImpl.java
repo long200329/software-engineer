@@ -80,8 +80,13 @@ public class ExperimentServiceImpl implements ExperimentService {
 
         if(experimentSubmissionMapper.selectOne(queryWrapper)==null)
             return experimentSubmissionMapper.insert(experimentSubmission);
-        else
+        else{
+            experimentSubmission.setScore(null);
+            experimentSubmission.setCorrectorName(null);
+            experimentSubmission.setCorrectorId(null);
             return experimentSubmissionMapper.update(experimentSubmission,queryWrapper);
+        }
+
     }
 
     public String uploadReport(String courseId,Integer ExperimentId,MultipartFile file)throws IOException {
