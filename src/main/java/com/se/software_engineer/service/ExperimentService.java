@@ -3,6 +3,7 @@ package com.se.software_engineer.service;
 import cn.hutool.json.JSONArray;
 import com.se.software_engineer.entity.ExperimentInfo;
 import com.se.software_engineer.entity.ExperimentSubmission;
+import com.se.software_engineer.entity.File;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,4 +20,5 @@ public interface ExperimentService {
     String getReportScore(String id,String courseId,Integer experimentId);
     JSONArray getReports(String courseId,String id);
     JSONArray getStudentReports(String courseId,Integer experimentId);
+
 }

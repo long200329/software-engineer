@@ -4,10 +4,13 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.se.software_engineer.entity.CommonResult;
 import com.se.software_engineer.service.FeedbackService;
+import com.se.software_engineer.service.FileService;
 import com.se.software_engineer.service.NoticeService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -20,6 +23,9 @@ public class teachAidController {
 
     @Resource
     private FeedbackService feedbackService;
+
+    @Resource
+    private FileService fileService;
 
     @PostMapping("/notice")
     public CommonResult createNotice(@RequestParam String noticeTittle,@RequestParam String noticeContent,@RequestParam String courseId){
@@ -80,6 +86,17 @@ public class teachAidController {
         array.sort(Comparator.comparing(obj -> ((JSONObject) obj).getInt("noticeId")));
         Collections.reverse(array);
         return CommonResult.success("查询成功",array);
+    }
+
+    @PostMapping("/file")
+    public CommonResult uploadFile(@RequestParam String primaryIndex,@RequestParam(required = false) String secondaryIndex,@RequestParam(required = false) String tertiaryIndex,@RequestPart MultipartFile file)throws IOException{
+
+        return CommonResult.success("上传成功",fileService.uploadFile(primaryIndex,secondaryIndex,tertiaryIndex,file));
+    }
+
+    @GetMapping("/file")
+    public CommonResult getFile(@RequestParam String courseId){
+        return CommonResult.success("查询成功",fileService.getFiles(courseId));
     }
 
 }

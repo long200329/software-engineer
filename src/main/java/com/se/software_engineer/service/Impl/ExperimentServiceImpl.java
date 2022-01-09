@@ -40,6 +40,8 @@ public class ExperimentServiceImpl implements ExperimentService {
     private PermissionMapper permissionMapper;
     @Resource
     private UserService userService;
+    @Resource
+    private FileMapper fileMapper;
 
     public int createExperiment(ExperimentInfo experimentInfo){
         Integer num = experimentInfoMapper.maxId();
@@ -207,10 +209,18 @@ public class ExperimentServiceImpl implements ExperimentService {
                 ExperimentSubmission experimentSubmission = experimentSubmissionMapper.selectOne(queryWrapper);
                 object.put("id",permission.getId());
                 object.put("name",userService.getUserName(permission.getId()));
-                if(experimentSubmission==null)
-                    object.put("content","null");
-                else
-                    object.put("content",experimentSubmission.getContent());
+                if(experimentSubmission==null) {
+                    object.put("content", "null");
+                    object.put("score","null");
+                }
+                else {
+                    object.put("content", experimentSubmission.getContent());
+
+                    if(experimentSubmission.getScore() == null)
+                        object.put("score","none");
+                    else
+                        object.put("score",experimentSubmission.getScore().toString());
+                }
                 array.add(object);
             }
 
