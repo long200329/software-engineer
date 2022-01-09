@@ -3,6 +3,7 @@ package com.se.software_engineer.service;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.se.software_engineer.entity.Course;
+import com.se.software_engineer.entity.Permission;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface CourseService {
     String getCourseName(String courseId);
     List getPermissions(String courseId);
     Course getCourse(String courseId);
+    String getPermission(String courseId,String id);
 }

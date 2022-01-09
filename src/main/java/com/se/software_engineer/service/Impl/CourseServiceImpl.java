@@ -157,5 +157,13 @@ public class CourseServiceImpl implements CourseService {
         queryWrapper.eq("course_id",courseId);
         return courseMapper.selectOne(queryWrapper);
     }
+    public String getPermission(String courseId,String id){
+        QueryWrapper<Permission>queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("course_id",courseId).eq("id",id);
+        Permission permission = permissionMapper.selectOne(queryWrapper);
+        if(permission==null)
+            return "null";
+        else return permission.getUserPermission();
+    }
 
 }

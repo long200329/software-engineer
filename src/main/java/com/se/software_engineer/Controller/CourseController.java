@@ -58,6 +58,13 @@ public class CourseController {
         return CommonResult.success("查询成功",courseService.getCourse(courseId));
     }
 
+    @GetMapping("/permission/user")
+    public CommonResult getPermission(@RequestParam String courseId,@RequestParam String id) {
+        if (courseId == null)
+            return CommonResult.failure("查询失败，缺少课程id");
+        if (id == null)
+            return CommonResult.failure("错误，缺少id");
+        return CommonResult.success("查询成功", courseService.getPermission(courseId, id));
 
-
+    }
 }
