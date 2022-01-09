@@ -39,7 +39,7 @@ public class ScoreServiceImpl implements ScoreService {
         BigDecimal experimentScore = new BigDecimal(0.00);
         BigDecimal practiceScore = new BigDecimal(0.00);
         if(courseScore.getExperimentTotalScore().compareTo(new BigDecimal(0.00))!=0){
-            experimentScore = score.getExperimentScore().divide(courseScore.getExperimentTotalScore());
+            experimentScore = score.getExperimentScore().divide(courseScore.getExperimentTotalScore(),2);
             log.info("first:"+experimentScore.toString());
             experimentScore = experimentScore.multiply(courseScore.getExperimentWeight());
             log.info("second:"+experimentScore.toString());
