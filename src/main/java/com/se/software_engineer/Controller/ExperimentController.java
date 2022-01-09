@@ -122,4 +122,14 @@ public class ExperimentController {
         return CommonResult.success("查询成功",experimentService.getReports(courseId,id));
     }
 
+    @GetMapping("/report/user")
+    public CommonResult getStudentReports(@RequestParam String courseId,@RequestParam Integer experimentId){
+        if(courseId == null)
+            return CommonResult.failure("错误，缺少courseId");
+
+        if(experimentId == null)
+            return CommonResult.failure("错误，缺少id");
+        return CommonResult.success("查询成功",experimentService.getStudentReports(courseId,experimentId));
+    }
+
 }

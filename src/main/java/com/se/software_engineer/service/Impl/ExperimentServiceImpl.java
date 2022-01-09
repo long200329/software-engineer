@@ -36,6 +36,10 @@ public class ExperimentServiceImpl implements ExperimentService {
     private NoticeService noticeService;
     @Resource
     private CourseService courseService;
+    @Resource
+    private PermissionMapper permissionMapper;
+    @Resource
+    private UserService userService;
 
     public int createExperiment(ExperimentInfo experimentInfo){
         Integer num = experimentInfoMapper.maxId();
@@ -183,6 +187,33 @@ public class ExperimentServiceImpl implements ExperimentService {
             else score = experimentSubmission.getScore().toString();
             object.put("score",score);
             array.add(object);
+        }
+        return array;
+    }
+
+    public JSONArray getStudentReports(String courseId,Integer experimentId){
+        QueryWrapper<Permission>permissionQueryWrapper = new QueryWrapper<>();
+        permissionQueryWrapper.eq("course_id",courseId);
+        JSONArray array = new JSONArray();
+        List permissionList = permissionMapper.selectList(permissionQueryWrapper);
+
+        for(int i=0;i<permissionList.size();i++){
+            Permission permission = (Permission) permissionList.get(i);
+            if(permission.getUserPermission().equals("student")){
+
+                JSONObject object = new JSONObject();
+                QueryWrapper<ExperimentSubmission>queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("course_id",courseId).eq("id",permission.getId()).eq("experiment_id",experimentId);
+                ExperimentSubmission experimentSubmission = experimentSubmissionMapper.selectOne(queryWrapper);
+                object.put("id",permission.getId());
+                object.put("name",userService.getUserName(permission.getId()));
+                if(experimentSubmission==null)
+                    object.put("content","null");
+                else
+                    object.put("content",experimentSubmission.getContent());
+                array.add(object);
+            }
+
         }
         return array;
     }
