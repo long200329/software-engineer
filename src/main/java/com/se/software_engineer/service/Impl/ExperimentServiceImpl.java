@@ -156,7 +156,7 @@ public class ExperimentServiceImpl implements ExperimentService {
                 return experimentSubmission.getScore().toString();
             else return "none";
         }
-            
+
         return "null";
     }
 

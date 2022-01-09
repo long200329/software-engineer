@@ -1,6 +1,13 @@
 server:
   port: 8003 #服务端口
+
+
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 200MB
   application:
     name: cloud-tweet-service #服务名
   datasource:
