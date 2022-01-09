@@ -46,4 +46,10 @@ public class CourseScoreServiceImpl implements CourseScoreService {
 
     }
 
+    public CourseScore getCourseScore(String courseId){
+        QueryWrapper<CourseScore>queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("course_id",courseId);
+        return courseScoreMapper.selectOne(queryWrapper);
+    }
+
 }

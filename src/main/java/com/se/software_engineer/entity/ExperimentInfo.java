@@ -26,4 +26,6 @@ public class ExperimentInfo {
     private Date deadline;
 
     private String experimentName;
+
+    private Integer num;
 }

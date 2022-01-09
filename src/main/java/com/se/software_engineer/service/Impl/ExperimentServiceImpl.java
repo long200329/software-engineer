@@ -41,6 +41,13 @@ public class ExperimentServiceImpl implements ExperimentService {
         else
             num++;
 
+        Integer exNum = experimentInfoMapper.maxNum(experimentInfo.getCourseId());
+        if(exNum == null)
+            exNum =1;
+        else
+            exNum++;
+        experimentInfo.setNum(exNum);
+
         experimentInfo.setExperimentId(num);
         if(experimentInfoMapper.insert(experimentInfo)>0){
 
@@ -140,8 +147,17 @@ public class ExperimentServiceImpl implements ExperimentService {
         return experimentSubmissionMapper.update(report,queryWrapper);
     }
 
-    public int getReportScore(String id,String courseId,Integer experimentId){
-        return experimentSubmissionMapper.getReportScore(id,courseId,experimentId);
+    public String getReportScore(String id,String courseId,Integer experimentId){
+        QueryWrapper<ExperimentSubmission>queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id).eq("course_id",courseId).eq("experiment_id",experimentId);
+        ExperimentSubmission experimentSubmission = experimentSubmissionMapper.selectOne(queryWrapper);
+        if(experimentSubmission !=null){
+            if(experimentSubmission.getScore()!=null)
+                return experimentSubmission.getScore().toString();
+            else return "none";
+        }
+            
+        return "null";
     }
 
 }

@@ -16,5 +16,5 @@ public interface ExperimentService {
     String uploadReport(String courseId,Integer ExperimentId,MultipartFile file)throws IOException;
     ExperimentSubmission getReport(String id,String courseId,int experimentId);
     int putReport(String id,String courseId,int experimentId,String correctorId,String correctorName,Double score);
-    int getReportScore(String id,String courseId,Integer experimentId);
+    String getReportScore(String id,String courseId,Integer experimentId);
 }

@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface ExperimentInfoMapper extends BaseMapper<ExperimentInfo>{
     Integer maxId();
+    Integer maxNum(String courseId);
 }

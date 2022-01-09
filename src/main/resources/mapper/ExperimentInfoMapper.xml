@@ -14,17 +14,24 @@
     <result property="startTime" column="start_time" jdbcType="DATE"/>
     <result property="deadline" column="deadline" jdbcType="DATE"/>
     <result property="experimentName" column="experiment_name" jdbcType="VARCHAR"/>
+    <result property="num" column="num" jdbcType="INTEGER"/>
 
   </resultMap>
 
   <sql id="Base_Column_List">
-    experiment_id,course_id,teacher,description,template,submission_method,start_time,deadline,experiment_name
+    experiment_id,course_id,teacher,description,template,submission_method,start_time,deadline,experiment_name,num
   </sql>
 
   <select id="maxId" resultType="Integer">
     SELECT MAX(experiment_id)
     FROM experiment_info
 
+  </select>
+
+  <select id="maxNum" resultType="Integer">
+    SELECT MAX(num)
+    FROM experiment_info
+    WHERE course_id =#{courseId}
   </select>
 
 </mapper>

@@ -42,4 +42,14 @@ public class ScoreController {
 
         return CommonResult.success("查询成功",scoreService.getScore(id,courseId));
     }
+
+    @GetMapping("/courseScore")
+    public CommonResult getCourseScore(@RequestParam String courseId){
+        if(courseId == null)
+            return CommonResult.failure("请求失败，缺少课程号");
+
+
+        return CommonResult.success("查询成功",courseScoreService.getCourseScore(courseId));
+    }
+
 }
