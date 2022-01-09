@@ -1,8 +1,11 @@
 package com.se.software_engineer.service.Impl;
 
+import cn.hutool.json.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.se.software_engineer.entity.Notice;
+import com.se.software_engineer.entity.Permission;
 import com.se.software_engineer.mapper.NoticeMapper;
+import com.se.software_engineer.mapper.PermissionMapper;
 import com.se.software_engineer.service.CourseService;
 import com.se.software_engineer.service.NoticeService;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ public class NoticeServiceImpl implements NoticeService {
     private NoticeMapper noticeMapper;
     @Resource
     private CourseService courseService;
+    @Resource
+    private PermissionMapper permissionMapper;
     public int createNotice(String noticeTittle,String noticeContent,String courseId){
         Integer noticeId = noticeMapper.maxId();
         if(noticeId==null)
@@ -46,5 +51,19 @@ public class NoticeServiceImpl implements NoticeService {
         List list = noticeMapper.selectList(queryWrapper);
         Collections.reverse(list);
         return list;
+    }
+    public JSONArray getUserNotices(String id){
+        QueryWrapper<Permission>permissionQueryWrapper = new QueryWrapper<>();
+        permissionQueryWrapper.eq("id",id);
+        List list = permissionMapper.selectList(permissionQueryWrapper);
+        JSONArray array = new JSONArray();
+        for(int i=0;i<list.size();i++){
+            Permission permission = (Permission) list.get(i);
+            List noticeList = getNotices(permission.getCourseId());
+            for(int j=0;j<noticeList.size();j++){
+                array.add(noticeList.get(j));
+            }
+        }
+        return array;
     }
 }

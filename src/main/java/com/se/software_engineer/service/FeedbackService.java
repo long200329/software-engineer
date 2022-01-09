@@ -6,4 +6,5 @@ public interface FeedbackService {
     int createFeedback(String id,String courseId,String feedbackContent);
     List getCourseFeedbacks(String courseId);
     List getStudentFeedbacks(String courseId,String id);
+
 }

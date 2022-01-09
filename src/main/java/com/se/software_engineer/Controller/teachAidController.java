@@ -1,11 +1,15 @@
 package com.se.software_engineer.Controller;
 
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import com.se.software_engineer.entity.CommonResult;
 import com.se.software_engineer.service.FeedbackService;
 import com.se.software_engineer.service.NoticeService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Comparator;
 
 @RestController
 @CrossOrigin("*")
@@ -66,4 +70,16 @@ public class teachAidController {
 
         return CommonResult.success("查询成功",feedbackService.getStudentFeedbacks(courseId,id));
     }
+    @GetMapping("/notice/user")
+    public CommonResult getStudentFeedbacks(@RequestParam String id){
+
+        if(id==null)
+            return CommonResult.failure("错误，缺少id");
+
+        JSONArray array = noticeService.getUserNotices(id);
+        array.sort(Comparator.comparing(obj -> ((JSONObject) obj).getInt("noticeId")));
+        Collections.reverse(array);
+        return CommonResult.success("查询成功",array);
+    }
+
 }

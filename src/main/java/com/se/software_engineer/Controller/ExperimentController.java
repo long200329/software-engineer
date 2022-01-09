@@ -121,5 +121,5 @@ public class ExperimentController {
             return CommonResult.failure("错误，缺少id");
         return CommonResult.success("查询成功",experimentService.getReports(courseId,id));
     }
-    
+
 }

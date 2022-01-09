@@ -104,7 +104,7 @@ public class ExperimentServiceImpl implements ExperimentService {
         if(file==null)return "none";
 
         String webPath = "http://175.24.202.178:777";
-        String localPath = "C:\\upload";
+        String localPath = "C:\\software_engineer";
 
 
             num++;
@@ -186,5 +186,7 @@ public class ExperimentServiceImpl implements ExperimentService {
         }
         return array;
     }
+
+
 
 }
