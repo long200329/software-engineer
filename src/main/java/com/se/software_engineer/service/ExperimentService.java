@@ -17,4 +17,5 @@ public interface ExperimentService {
     ExperimentSubmission getReport(String id,String courseId,int experimentId);
     int putReport(String id,String courseId,int experimentId,String correctorId,String correctorName,Double score);
     String getReportScore(String id,String courseId,Integer experimentId);
+    JSONArray getReports(String courseId,String id);
 }

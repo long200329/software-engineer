@@ -111,4 +111,15 @@ public class ExperimentController {
             return CommonResult.failure("错误，缺少id");
         return CommonResult.success("查询成功",experimentService.getReportScore(id,courseId,experimentId));
     }
+
+    @GetMapping("/reports")
+    public CommonResult getReports(@RequestParam String courseId,@RequestParam String id){
+        if(courseId == null)
+            return CommonResult.failure("错误，缺少courseId");
+
+        if(id == null)
+            return CommonResult.failure("错误，缺少id");
+        return CommonResult.success("查询成功",experimentService.getReports(courseId,id));
+    }
+    
 }

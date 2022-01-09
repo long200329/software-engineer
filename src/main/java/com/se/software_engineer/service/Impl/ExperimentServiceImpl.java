@@ -1,5 +1,8 @@
 package com.se.software_engineer.service.Impl;
 
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.se.software_engineer.entity.*;
 import com.se.software_engineer.mapper.*;
@@ -158,6 +161,30 @@ public class ExperimentServiceImpl implements ExperimentService {
         }
 
         return "null";
+    }
+
+    public JSONArray getReports(String courseId, String id){
+        JSONArray array = new JSONArray();
+        QueryWrapper<ExperimentInfo>experimentInfoQueryWrapper = new QueryWrapper<>();
+        experimentInfoQueryWrapper.eq("course_id",courseId);
+        List list = experimentInfoMapper.selectList(experimentInfoQueryWrapper);
+
+        for(int i=0;i<list.size();i++){
+            ExperimentInfo experimentInfo = (ExperimentInfo) list.get(i);
+            JSONObject object = JSONUtil.parseObj(experimentInfo);
+            QueryWrapper<ExperimentSubmission> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("course_id",courseId).eq("id",id).eq("experiment_id",experimentInfo.getExperimentId());
+            ExperimentSubmission experimentSubmission = experimentSubmissionMapper.selectOne(queryWrapper);
+            String score;
+            if(experimentSubmission == null)
+                score = "null";
+            else if(experimentSubmission.getScore()==null)
+                score = "none";
+            else score = experimentSubmission.getScore().toString();
+            object.put("score",score);
+            array.add(object);
+        }
+        return array;
     }
 
 }
