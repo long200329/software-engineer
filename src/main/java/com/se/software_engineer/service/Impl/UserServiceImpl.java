@@ -87,6 +87,12 @@ public class UserServiceImpl implements UserService {
         return user.getName();
     }
 
+    @Override
+    public List getAllUser(){
+        QueryWrapper<User>queryWrapper = new QueryWrapper<>();
+        return userMapper.selectList(queryWrapper);
+    }
+
 
 
 }

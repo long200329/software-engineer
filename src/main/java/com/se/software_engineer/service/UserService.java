@@ -3,6 +3,8 @@ package com.se.software_engineer.service;
 import cn.hutool.json.JSONObject;
 import com.se.software_engineer.entity.User;
 
+import java.util.List;
+
 public interface UserService {
 
     JSONObject login(String id, String password);
@@ -12,4 +14,5 @@ public interface UserService {
     int deleteUser(String id);
     String sendMail(String id,String email);
     String getUserName(String id);
+    List getAllUser();
 }

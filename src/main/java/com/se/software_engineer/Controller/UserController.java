@@ -2,6 +2,7 @@ package com.se.software_engineer.Controller;
 
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.se.software_engineer.entity.CommonResult;
 import com.se.software_engineer.entity.User;
@@ -9,6 +10,7 @@ import com.se.software_engineer.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -101,6 +103,18 @@ public class UserController {
         if(email == null)
             return CommonResult.failure("email为空");
         return CommonResult.success("发送成功",userService.sendMail(id,email));
+    }
+
+    @GetMapping("/user/all")
+    public CommonResult getAllUser(){
+        List list = userService.getAllUser();
+        List array = new JSONArray();
+        for(int i=0;i<list.size();i++){
+            User user = (User)list.get(i);
+            if(!user.getIdentification().equals("admin"))
+                array.add(user);
+        }
+        return CommonResult.success("查询成功",array);
     }
 
 }
